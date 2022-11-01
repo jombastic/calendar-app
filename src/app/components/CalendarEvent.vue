@@ -3,7 +3,7 @@
         <div v-if="!event.edit">
             <span class="has-text-centered details">{{ event.details }}</span>
             <div class="has-text-centered icons"><i class="fa fa-pencil-square edit-icon" @click="editEvent(day.id, event.details)"></i>
-                <i class="fa fa-trash-o delete-icon"></i>
+                <i class="fa fa-trash-o delete-icon" @click="deleteEvent(day.id, eventIndex)"></i>
             </div>
         </div>
         <div v-if="event.edit">
@@ -21,7 +21,7 @@ import { store } from '../store.js';
 export default {
     name: "CalendarEvent",
 
-    props: ['event', 'day'],
+    props: ['event', 'day', 'eventIndex'],
 
     data() {
         return {
@@ -45,6 +45,9 @@ export default {
             if (updatedEventDetails === '') updatedEventDetails = originalEventDetails;
             store.updateEvent(dayId, originalEventDetails, updatedEventDetails);
             this.newEventDetails = '';
+        },
+        deleteEvent(dayId, eventIndex) {
+            store.deleteEvent(dayId, eventIndex);
         }
     }
 }
